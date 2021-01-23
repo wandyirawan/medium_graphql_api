@@ -6,7 +6,8 @@ defmodule MediumGraphqlApi.Accounts.Session do
     user = Repo.get_by(User, email: String.downcase(args.email))
 
     IO.inspect(args)
-    IO.inspect( user)
+    IO.inspect(user)
+
     case check_password(user, args) do
       true -> {:ok, user}
       _ -> {:error, "Incorrect login credential"}
