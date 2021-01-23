@@ -2,5 +2,5 @@ defmodule MediumGraphqlApiWeb.Schema.Types do
   use Absinthe.Schema.Notation
   alias MediumGraphqlApiWeb.Schema.Types
 
-  import_types(Type.UserType)
+  import_types(Types.UserType)
 end
