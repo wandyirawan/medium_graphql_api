@@ -28,14 +28,18 @@ defmodule MediumGraphqlApi.Accounts.User do
     ])
     |> validate_format(:email, ~r/@/)
     |> update_change(:email, &String.downcase(&1))
-    |> validate_length(:passwor, min: 6, max: 100)
-    |> validate_confirmation(:password, :password_confirmation)
+    |> validate_length(:password, min: 6, max: 100)
+    |> validate_confirmation(:password)
     |> unique_constraint(:email)
-    |> hash_password
+    |> hash_password()
   end
 
   @doc false
-  def hash_password(changeset) do
+  defp hash_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+    change(changeset, Bcrypt.add_hash(password))
+  end
+
+  defp hash_password(changeset) do
     changeset
   end
 end
